@@ -5,3 +5,22 @@
   text-align: center;
 }
 
+
+.article-img-small {
+  max-width: 128px;
+  max-height: 128px;
+  margin: auto;
+  outline: 1px solid white;
+}
+
+.articles-container {
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.articles-item {
+  outline: 1px solid white;
+  justify-content: center;
+  padding: 20px;
+}
