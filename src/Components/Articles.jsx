@@ -19,7 +19,7 @@ function Articles(){
             {articles.map((article) => {
                 return (
                     <>
-                    <div className="articles-item">
+                    <div className="articles-card">
                         <Link to={`/articles/${article.article_id}`}>
                             <h3>{article.title}</h3>
                         </Link>
