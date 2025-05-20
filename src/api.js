@@ -9,3 +9,9 @@ export const getArticles = () => {
         return response.data.articles
     })
 }
+
+export const getArticleById = (article_id) => {
+    return northcodersNewsApi.get(`/articles/${article_id}`).then((response)=>{
+        return response.data.article
+    })
+}

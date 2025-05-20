@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getArticles } from "../api";
+import { Link } from "react-router";
 
 function Articles(){
 
@@ -8,7 +9,6 @@ function Articles(){
     useEffect(()=>{
         getArticles()
         .then((response)=>{
-            console.log(response)
             setArticles(response)
         })
     }, [])
@@ -20,9 +20,12 @@ function Articles(){
                 return (
                     <>
                     <div className="articles-item">
-                        <h3>{article.title}</h3>
+                        <Link to={`/articles/${article.article_id}`}>
+                            <h3>{article.title}</h3>
+                        </Link>
                         <p>Author: {article.author}</p>
                         <img src={article.article_img_url} className="article-img-small" placeholder="Article image"/>
+                        <p>Votes: {article.votes}</p>
                     </div>
                     </>
                 )

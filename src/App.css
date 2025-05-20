@@ -13,6 +13,12 @@
   outline: 1px solid white;
 }
 
+.article-img-large {
+  max-width: 256px;
+  max-height: 256px;
+  outline: 1px solid white;
+}
+
 .articles-container {
   max-width: 500px;
   display: grid;
@@ -23,4 +29,12 @@
   outline: 1px solid white;
   justify-content: center;
   padding: 20px;
+}
+
+.single-article-container {
+  max-width: 500px;
+}
+
+.single-article-text {
+  text-align: left;
 }
