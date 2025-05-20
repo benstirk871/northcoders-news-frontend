@@ -1,17 +1,31 @@
 import { useState, useEffect } from "react";
 import { getArticles } from "../api";
 import { Link } from "react-router";
+import Loading from "./Loading";
+import Error from "./Error";
 
 function Articles(){
 
     const [articles, setArticles] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
 
     useEffect(()=>{
+        setIsLoading(true)
         getArticles()
         .then((response)=>{
             setArticles(response)
+            setIsLoading(false)
+        })
+        .catch(() => {
+            setIsLoading(false)
+            setIsError(true)
         })
     }, [])
+
+    if(isLoading) return <Loading />
+    if(isError) return <Error />
+    
 
     return (
         <>

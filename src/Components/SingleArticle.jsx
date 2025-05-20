@@ -1,17 +1,27 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import { getArticleById, getCommentsByArticleId } from "../api"
+import Loading from "./Loading"
+import Error from "./Error";
 
 function SingleArticle(){
 
     const [article, setArticle] = useState([])
     const [comments, setComments] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
     const {article_id} = useParams()
     
     useEffect(()=>{
+        setIsLoading(true)
         getArticleById(article_id)
         .then((response)=>{
             setArticle(response)
+            setIsLoading(false)
+        })
+        .catch(() => {
+            setIsLoading(false)
+            setIsError(true)
         })
     }, [])
 
@@ -21,6 +31,11 @@ function SingleArticle(){
             setComments(response);
         })
     }, [])
+
+    
+    if(isLoading) return <Loading />
+    if(isError) return <Error />
+
 
     return (
         <>
