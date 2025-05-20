@@ -10,6 +10,7 @@ function SingleArticle(){
     const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [isCommentError, setIsCommentError] = useState(false)
     const {article_id} = useParams()
     
     useEffect(()=>{
@@ -26,9 +27,15 @@ function SingleArticle(){
     }, [])
 
     useEffect(()=>{
+        setIsLoading(true)
         getCommentsByArticleId(article_id)
         .then((response)=>{
             setComments(response);
+            setIsLoading(false)
+        })
+        .catch(() => {
+            setIsLoading(false)
+            setIsCommentError(true)
         })
     }, [])
 
@@ -50,7 +57,8 @@ function SingleArticle(){
         </div>
         <div className="comments-container">
             <h3>Comments</h3>
-            {comments.map((comment) => {
+            {isCommentError ? <p>Could not display comments</p> : 
+            comments.map((comment) => {
                 return (
                     <div className="comment-card">
                         <p>Posted by: {comment.author}</p>
@@ -58,7 +66,8 @@ function SingleArticle(){
                         <p>Votes: {comment.votes}</p>
                     </div>
                 )
-            })}
+            })
+           }
         </div>
         </>
     )
