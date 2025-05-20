@@ -14,14 +14,13 @@ function SingleArticle({currentUser}){
     const {article_id} = useParams()
 
     const [isClicked, setIsClicked] = useState(false)
-    const [votes, setVotes] = useState(0)
+    let [votes, setVotes] = useState(0)
 
         
     useEffect(()=>{
         setIsLoading(true)
         getArticleById(article_id)
         .then((response)=>{
-            console.log(response)
             setArticle(response)
             setIsLoading(false)
             setVotes(response.votes)
@@ -30,7 +29,7 @@ function SingleArticle({currentUser}){
             setIsLoading(false)
             setIsError(true)
         })
-    }, [isClicked])
+    }, [])
 
     useEffect(()=>{
         setIsLoading(true)
@@ -51,15 +50,27 @@ function SingleArticle({currentUser}){
 
     function upvote(){
         if (!isClicked){
+            setVotes(votes += 1)
             patchArticleById(article_id, 1)
-            setIsClicked(true)
+            .then(()=>{
+                setIsClicked(true)
+            })
+            .catch(()=>{
+                setVotes(votes -= 1)
+            })
         }
     }
 
     function downvote(){
         if (!isClicked){
+            setVotes(votes -= 1)
             patchArticleById(article_id, -1)
-            setIsClicked(true)
+            .then(()=>{
+                setIsClicked(true)
+            })
+            .catch(()=>{
+                setVotes(votes += 1)
+            })
         } 
     }
 

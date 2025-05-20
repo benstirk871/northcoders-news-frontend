@@ -11,8 +11,7 @@ function ProfilePage({currentUser, setCurrentUser}){
     
     function handleLogin(event){
         event.preventDefault()
-        //console.log(usernameInput)
-        
+              
         getUserByUsername(usernameInput)
         .then((response) => {
             console.log(response)
