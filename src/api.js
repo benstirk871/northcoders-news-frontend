@@ -15,3 +15,9 @@ export const getArticleById = (article_id) => {
         return response.data.article
     })
 }
+
+export const getCommentsByArticleId = (article_id) => {
+    return northcodersNewsApi.get(`/articles/${article_id}/comments`).then((response) => {
+        return response.data.comments
+    })
+}
