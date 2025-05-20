@@ -38,7 +38,6 @@ function SingleArticle(){
             setIsCommentError(true)
         })
     }, [])
-
     
     if(isLoading) return <Loading />
     if(isError) return <Error />
