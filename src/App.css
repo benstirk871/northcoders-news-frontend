@@ -5,6 +5,37 @@
   text-align: center;
 }
 
+/*Navbar styling */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+}
+/* .navbar-left {
+  margin: 0 10px;
+  display: flex;
+  align-items: left;
+}
+
+.navbar-right {
+
+  display: flex;
+  align-items: right;
+} */
+
+.navbar-left a,
+.navbar-right a {
+    margin: 0 20px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+
 /* Articles styling */
 .articles-container {
   max-width: 500px;

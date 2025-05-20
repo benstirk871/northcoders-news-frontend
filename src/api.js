@@ -24,3 +24,16 @@ export const getCommentsByArticleId = (article_id) => {
         return response.data.comments
     })
 }
+
+export const getUserByUsername = (username) => {
+    return northcodersNewsApi.get(`/users/${username}`)
+    .then((response) => {
+        return response.data.user
+    })
+}
+
+export const patchArticleById = (article_id, numOfVotes) => {
+    return northcodersNewsApi.patch(`/articles/${article_id}`, {
+        inc_votes: numOfVotes
+    })
+}
