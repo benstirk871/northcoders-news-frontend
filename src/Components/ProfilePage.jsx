@@ -4,28 +4,32 @@ import { getUserByUsername } from "../api";
 function ProfilePage({currentUser, setCurrentUser}){
 
     const [usernameInput, setUsernameInput] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleInput(event){
         setUsernameInput(event.target.value)
     }
     
     function handleLogin(event){
+        setIsLoading(true)
         event.preventDefault()
               
         getUserByUsername(usernameInput)
         .then((response) => {
-            console.log(response)
+            setIsLoading(false)
             setCurrentUser(response)
             setUsernameInput("")
         })
-        .catch((error) => {
-            console.log(error)
+        .catch(() => {
+            alert('Failed to log in')
         })
     }
 
     function handleLogout(){
         setCurrentUser(null)
     }
+
+    if (isLoading) return <p>Logging in...</p>
     
     return (
         <>
@@ -33,7 +37,7 @@ function ProfilePage({currentUser, setCurrentUser}){
             <label htmlFor="username-input">
                 Enter your username: 
             </label>
-            <input id="username-input" type="text" onChange={handleInput}/>
+            <input name="username-input" type="textbox" onChange={handleInput}/>
             <button onClick={handleLogin}>Sign In</button>
         </form>) : (
             <>

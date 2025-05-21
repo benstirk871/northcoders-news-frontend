@@ -3,20 +3,17 @@ import { useParams } from "react-router"
 import { getArticleById, getCommentsByArticleId, patchArticleById } from "../api"
 import Loading from "./Loading"
 import Error from "./Error";
+import CommentSection from "./CommentSection";
 
 function SingleArticle({currentUser}){
 
     const [article, setArticle] = useState([])
-    const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isCommentError, setIsCommentError] = useState(false)
-    const {article_id} = useParams()
-
     const [isClicked, setIsClicked] = useState(false)
     let [votes, setVotes] = useState(0)
+    const {article_id} = useParams()
 
-        
     useEffect(()=>{
         setIsLoading(true)
         getArticleById(article_id)
@@ -31,25 +28,13 @@ function SingleArticle({currentUser}){
         })
     }, [])
 
-    useEffect(()=>{
-        setIsLoading(true)
-        getCommentsByArticleId(article_id)
-        .then((response)=>{
-            setComments(response);
-            setIsLoading(false)
-        })
-        .catch(() => {
-            setIsLoading(false)
-            setIsCommentError(true)
-        })
-    }, [])
-    
+       
     if(isLoading) return <Loading />
     if(isError) return <Error />
 
 
     function upvote(){
-        if (!isClicked){
+        if (currentUser && !isClicked){
             setVotes(votes += 1)
             patchArticleById(article_id, 1)
             .then(()=>{
@@ -58,11 +43,13 @@ function SingleArticle({currentUser}){
             .catch(()=>{
                 setVotes(votes -= 1)
             })
+        } else if (!currentUser){
+           alert('Please log in to vote')
         }
     }
 
     function downvote(){
-        if (!isClicked){
+        if (currentUser && !isClicked){
             setVotes(votes -= 1)
             patchArticleById(article_id, -1)
             .then(()=>{
@@ -71,7 +58,9 @@ function SingleArticle({currentUser}){
             .catch(()=>{
                 setVotes(votes += 1)
             })
-        } 
+        } else if (!currentUser){
+            alert('Please log in to vote')
+        }
     }
 
 
@@ -83,24 +72,12 @@ function SingleArticle({currentUser}){
                 <img src={article.article_img_url} className="article-img-large" placeholder="Article image"/>
                 <p className="text-align-left">Author: {article.author}</p>
                 <p className="text-align-left">Votes: {votes}</p>
-                {currentUser ? <><button onClick={upvote}>Upvote</button><button onClick={downvote}>Downvote</button></> : null}
+                <button onClick={upvote}>Upvote</button>
+                <button onClick={downvote}>Downvote</button>
                 <p className="single-article-body">{article.body}</p>
             </div>
         </div>
-        <div className="comments-container">
-            <h3>Comments</h3>
-            {isCommentError ? <p>Could not display comments</p> : 
-            comments.map((comment) => {
-                return (
-                    <div className="comment-card">
-                        <p>Posted by: {comment.author}</p>
-                        <p>{comment.body}</p>
-                        <p>Votes: {comment.votes}</p>
-                    </div>
-                )
-            })
-           }
-        </div>
+        <CommentSection article_id={article_id} currentUser={currentUser} />
         </>
     )
 }
