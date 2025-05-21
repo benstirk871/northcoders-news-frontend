@@ -1,6 +1,10 @@
 import { Link } from "react-router"
+import { useContext } from "react"
+import { UserContext } from "../Context/User"
 
-function Navbar({currentUser}){
+function Navbar(){
+
+    const {loggedInUser, isLoggedIn} = useContext(UserContext)
     return (
         <>
         <div className="navbar-container">
@@ -10,7 +14,7 @@ function Navbar({currentUser}){
         </span>
         <span className="navbar-right">
             <Link to="/users/:username">
-            {!currentUser ? <span>Sign In</span> : <span>{currentUser.username}</span> }
+            {!isLoggedIn ? <span>Sign In</span> : <span>{loggedInUser.username}</span> }
             </Link>
         </span>
         </div>

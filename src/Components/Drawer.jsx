@@ -1,10 +1,14 @@
-import { use, useState } from "react"
+import { useState } from "react"
+import { useContext } from "react"
+import { UserContext } from "../Context/User"
 
-function Drawer({ children, currentUser }){
+function Drawer({ children }){
+
+    const {isLoggedIn} = useContext(UserContext)
     const [drawerOpen, setDrawerOpen] = useState(false)
 
     function openCommentForm(){
-        if (!currentUser){
+        if (!isLoggedIn){
             alert('Please sign in to add a comment')
         } else if (drawerOpen){
             setDrawerOpen(false)

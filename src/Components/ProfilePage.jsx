@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getUserByUsername } from "../api";
+import { UserContext } from "../Context/User";
 
-function ProfilePage({currentUser, setCurrentUser}){
+function ProfilePage(){
+
+    const {loggedInUser, setLoggedInUser, isLoggedIn} = useContext(UserContext)
 
     const [usernameInput, setUsernameInput] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -17,7 +20,7 @@ function ProfilePage({currentUser, setCurrentUser}){
         getUserByUsername(usernameInput)
         .then((response) => {
             setIsLoading(false)
-            setCurrentUser(response)
+            setLoggedInUser(response)
             setUsernameInput("")
         })
         .catch(() => {
@@ -26,14 +29,14 @@ function ProfilePage({currentUser, setCurrentUser}){
     }
 
     function handleLogout(){
-        setCurrentUser(null)
+        setLoggedInUser({})
     }
 
     if (isLoading) return <p>Logging in...</p>
     
     return (
         <>
-        {!currentUser ? ( <form>
+        {!isLoggedIn ? ( <form>
             <label htmlFor="username-input">
                 Enter your username: 
             </label>
@@ -41,16 +44,13 @@ function ProfilePage({currentUser, setCurrentUser}){
             <button onClick={handleLogin}>Sign In</button>
         </form>) : (
             <>
-            <p>Welcome {currentUser.username}</p>
-            <img src={currentUser.avatar_url} />
+            <p>Welcome {loggedInUser.username}</p>
+            <img src={loggedInUser.avatar_url} />
             <div>
             <button onClick={handleLogout}>Sign Out</button>
             </div>
             </>
         )}
-       
-        
-        
         </>
     )
 }

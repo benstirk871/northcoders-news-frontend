@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router"
-import { getArticleById, getCommentsByArticleId, patchArticleById } from "../api"
+import { getArticleById, patchArticleById } from "../api"
 import Loading from "./Loading"
 import Error from "./Error";
 import CommentSection from "./CommentSection";
+import { UserContext } from "../Context/User";
 
-function SingleArticle({currentUser}){
+function SingleArticle(){
+
+    const {isLoggedIn} = useContext(UserContext)
 
     const [article, setArticle] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -34,7 +37,7 @@ function SingleArticle({currentUser}){
 
 
     function upvote(){
-        if (currentUser && !isClicked){
+        if (isLoggedIn && !isClicked){
             setVotes(votes += 1)
             patchArticleById(article_id, 1)
             .then(()=>{
@@ -42,14 +45,15 @@ function SingleArticle({currentUser}){
             })
             .catch(()=>{
                 setVotes(votes -= 1)
+                alert('Vote failed')
             })
-        } else if (!currentUser){
+        } else if (!isLoggedIn){
            alert('Please log in to vote')
         }
     }
 
     function downvote(){
-        if (currentUser && !isClicked){
+        if (isLoggedIn && !isClicked){
             setVotes(votes -= 1)
             patchArticleById(article_id, -1)
             .then(()=>{
@@ -57,8 +61,9 @@ function SingleArticle({currentUser}){
             })
             .catch(()=>{
                 setVotes(votes += 1)
+                alert('Vote failed')
             })
-        } else if (!currentUser){
+        } else if (!isLoggedIn){
             alert('Please log in to vote')
         }
     }
@@ -77,7 +82,7 @@ function SingleArticle({currentUser}){
                 <p className="single-article-body">{article.body}</p>
             </div>
         </div>
-        <CommentSection article_id={article_id} currentUser={currentUser} />
+        <CommentSection article_id={article_id} />
         </>
     )
 }

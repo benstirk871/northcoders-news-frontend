@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { postCommentByArticleId } from "../api"
+import { UserContext } from "../Context/User"
 
 
-function AddComment({article_id, currentUser, setNewCommentPosted}){
+function AddComment({article_id, setRefreshComments}){
        
+    const {loggedInUser} = useContext(UserContext)
 
     let [commentBody, setCommentBody] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -16,10 +18,10 @@ function AddComment({article_id, currentUser, setNewCommentPosted}){
         event.preventDefault()
         setIsLoading(true)
         
-        postCommentByArticleId(article_id, currentUser.username, commentBody)
+        postCommentByArticleId(article_id, loggedInUser.username, commentBody)
         .then(()=>{
             setIsLoading(false)
-            setNewCommentPosted((prev) => prev + 1)
+            setRefreshComments((prev) => prev + 1)
             setCommentBody('')
         })
         .catch(()=>{
