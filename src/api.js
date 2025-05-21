@@ -37,3 +37,10 @@ export const patchArticleById = (article_id, numOfVotes) => {
         inc_votes: numOfVotes
     })
 }
+
+export const postCommentByArticleId = (article_id, currentUser, commentBody) => {
+    return northcodersNewsApi.post(`/articles/${article_id}/comments`, {
+        username: currentUser,
+        body: commentBody
+    })
+}
