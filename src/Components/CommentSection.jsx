@@ -1,13 +1,18 @@
-import { useState, useEffect } from "react";
-import { getCommentsByArticleId } from "../api";
+import { useState, useEffect, useContext } from "react";
+import { getCommentsByArticleId, deleteCommentByCommentId } from "../api";
 import AddComment from "./AddComment";
 import Drawer from "./Drawer";
+import { UserContext } from "../Context/User"
 
-function CommentsSection({ article_id, currentUser }) {
+function CommentsSection({ article_id}) {
+
+  const {loggedInUser} = useContext(UserContext)
+
   const [comments, setComments] = useState([]);
   const [isCommentError, setIsCommentError] = useState(false);
-  const [newCommentPosted, setNewCommentPosted] = useState(0);
+  const [refreshComments, setRefreshComments] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
     setIsLoading(true);
@@ -20,15 +25,28 @@ function CommentsSection({ article_id, currentUser }) {
         setIsLoading(false);
         setIsCommentError(true);
       });
-  }, [newCommentPosted]);
+  }, [refreshComments]);
+
+  function deleteComment(comment_id){
+    setIsDeleting(true)
+    deleteCommentByCommentId(comment_id)
+    .then(()=>{
+      setRefreshComments((prev) => prev + 1)
+      setIsDeleting(false)
+      alert('Successfully deleted comment')
+    })
+    .catch(()=>{
+      setIsDeleting(false)
+      alert('Failed to delete comment')
+    })
+  }
 
   return (
     <div className="comments-container">
-      <Drawer currentUser={currentUser}>
+      <Drawer>
         <AddComment
           article_id={article_id}
-          currentUser={currentUser}
-          setNewCommentPosted={(prev) => setNewCommentPosted(prev + 1)}
+          setRefreshComments={setRefreshComments}
         />
       </Drawer>
       <h3>Comments</h3>
@@ -42,9 +60,11 @@ function CommentsSection({ article_id, currentUser }) {
             <p>Posted by: {comment.author}</p>
             <p>{comment.body}</p>
             <p>Votes: {comment.votes}</p>
+            {loggedInUser.username === comment.author ? (<button onClick={()=>deleteComment(comment.comment_id)}>Delete</button>) : null}
           </div>
         ))
       )}
+      {isDeleting ? <p>Deleting...</p> : null}
     </div>
   );
 }

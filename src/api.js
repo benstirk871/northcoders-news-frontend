@@ -44,3 +44,7 @@ export const postCommentByArticleId = (article_id, currentUser, commentBody) => 
         body: commentBody
     })
 }
+
+export const deleteCommentByCommentId = (comment_id) => {
+    return northcodersNewsApi.delete(`/comments/${comment_id}`)
+}
