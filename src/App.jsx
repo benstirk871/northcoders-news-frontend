@@ -19,8 +19,8 @@ function App() {
         <Navbar/>
         <Routes>
             <Route path="/" element={<Home/>} />
-            <Route path="/articles" element={<Articles/>} />
-            <Route path="/articles/:article_id" element={<SingleArticle/>} />
+            <Route path="/articles/:topic?" element={<Articles/>} />
+            <Route path="/article/:article_id" element={<SingleArticle/>} />
             <Route path="/users/:username" element={<ProfilePage/>} />
         </Routes>
     </>

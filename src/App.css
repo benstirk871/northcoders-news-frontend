@@ -14,14 +14,16 @@
   border-bottom: 1px solid #ccc;
 }
 
-.navbar-left a,
-.navbar-right a {
-    margin: 0 20px;
+.navbar-left {
+  text-align: left;
 }
 
 .navbar-right {
-    display: flex;
-    align-items: center;
+  text-align: right;
+}
+
+.nav-bar-item {
+  margin-right: 20px;
 }
 
 
@@ -75,4 +77,22 @@
 .comment-card {
   outline: 1px solid white;
   padding: 15px;
+}
+
+/*  */
+
+.topic-dropdown {
+  padding: 20px;
+  text-align: left;
+}
+
+.topic-link {
+  padding: 10px;
+  text-align: left;
+}
+
+.topics-navbar-container {
+  max-width: 500px;
+  display: flex;
+  padding: 10px;
 }
