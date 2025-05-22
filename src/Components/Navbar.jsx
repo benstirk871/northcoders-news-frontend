@@ -9,8 +9,8 @@ function Navbar(){
         <>
         <div className="navbar-container">
         <span className="navbar-left">
-            <Link to="/">Home</Link>
-            <Link to="/articles">Articles</Link>
+            <Link to="/" className="nav-bar-item">Home</Link>
+            <Link to="/articles" className="nav-bar-item">Articles</Link>
         </span>
         <span className="navbar-right">
             <Link to="/users/:username">

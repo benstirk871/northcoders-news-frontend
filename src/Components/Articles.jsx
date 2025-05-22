@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 import { getArticles } from "../api";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import Loading from "./Loading";
 import Error from "./Error";
+import TopicsNavbar from "./TopicsNavbar";
+
+
 
 function Articles(){
 
     const [articles, setArticles] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-
+    const {topic} = useParams()
+    
     useEffect(()=>{
         setIsLoading(true)
-        getArticles()
+        getArticles(topic)
         .then((response)=>{
             setArticles(response)
             setIsLoading(false)
@@ -21,7 +25,7 @@ function Articles(){
             setIsLoading(false)
             setIsError(true)
         })
-    }, [])
+    }, [topic])
 
     if(isLoading) return <Loading />
     if(isError) return <Error />
@@ -29,6 +33,7 @@ function Articles(){
 
     return (
         <>
+        <TopicsNavbar/>
         <div className="articles-container">
             {articles.map((article) => {
                 return (

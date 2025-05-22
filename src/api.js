@@ -4,8 +4,8 @@ const northcodersNewsApi = axios.create({
     baseURL: "https://nc-news-backend-d0dj.onrender.com/api"
 });
 
-export const getArticles = () => {
-    return northcodersNewsApi.get("/articles")
+export const getArticles = (topic) => {
+    return northcodersNewsApi.get("/articles", {params: {topic}})
     .then((response)=>{
         return response.data.articles
     })
@@ -47,4 +47,11 @@ export const postCommentByArticleId = (article_id, currentUser, commentBody) => 
 
 export const deleteCommentByCommentId = (comment_id) => {
     return northcodersNewsApi.delete(`/comments/${comment_id}`)
+}
+
+export const getTopics = () => {
+    return northcodersNewsApi.get("/topics")
+    .then((response)=> {
+        return response.data.topics
+    })
 }
