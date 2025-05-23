@@ -1,1 +1,1 @@
-I've included screenshots of my wireframes and component tree, but I struggled making them. I still feel a quite overwhelmed by React, and I'm not sure how to approach this project, particularly how to organise state and components to only re-render specific components.
+
