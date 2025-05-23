@@ -4,8 +4,14 @@ const northcodersNewsApi = axios.create({
     baseURL: "https://nc-news-backend-d0dj.onrender.com/api"
 });
 
-export const getArticles = (topic) => {
-    return northcodersNewsApi.get("/articles", {params: {topic}})
+export const getArticles = (topic, sortBy, orderBy) => {
+    return northcodersNewsApi.get("/articles", 
+        {params: {
+            topic: topic,
+            sort_by: sortBy,
+            order: orderBy
+            }
+        })
     .then((response)=>{
         return response.data.articles
     })

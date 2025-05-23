@@ -13,7 +13,7 @@ function SingleArticle(){
     const [article, setArticle] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isClicked, setIsClicked] = useState(false)
+    const [isClicked, setIsClicked] = useState(null)
     let [votes, setVotes] = useState(0)
     const {article_id} = useParams()
 
@@ -35,38 +35,58 @@ function SingleArticle(){
     if(isLoading) return <Loading />
     if(isError) return <Error />
 
-
-    function upvote(){
-        if (isLoggedIn && !isClicked){
-            setVotes(votes += 1)
-            patchArticleById(article_id, 1)
-            .then(()=>{
-                setIsClicked(true)
-            })
-            .catch(()=>{
-                setVotes(votes -= 1)
-                alert('Vote failed')
-            })
-        } else if (!isLoggedIn){
-           alert('Please log in to vote')
+    function handleVote(type){
+        if (!isLoggedIn){
+            alert('Please sign in to vote');
+            return;
         }
-    }
-
-    function downvote(){
-        if (isLoggedIn && !isClicked){
-            setVotes(votes -= 1)
-            patchArticleById(article_id, -1)
-            .then(()=>{
-                setIsClicked(true)
-            })
-            .catch(()=>{
-                setVotes(votes += 1)
-                alert('Vote failed')
-            })
-        } else if (!isLoggedIn){
-            alert('Please log in to vote')
+    
+        let voteChange = 0;
+    
+        if (type === 'upvote'){
+            if (isClicked === 'upvote'){
+                voteChange = -1
+                setIsClicked(null)
+            } else if (isClicked === 'downvote'){
+                voteChange = 2
+                setIsClicked('upvote')
+            } else if (isClicked === null){
+                voteChange = 1
+                setIsClicked('upvote')
+            }
+        } else if (type === 'downvote'){
+            if (isClicked === 'downvote'){
+                voteChange = 1
+                setIsClicked(null)
+            } else if (isClicked === 'upvote'){
+                voteChange = -2
+                setIsClicked('downvote')
+            } else if (isClicked === null){
+                voteChange = -1
+                setIsClicked('downvote')
+            }
         }
+    
+        setVotes(prevVotes => prevVotes + voteChange)
+    
+        patchArticleById(article_id, voteChange)
+            .catch(()=>{
+                setVotes(prevVotes => prevVotes - voteChange); // revert
+                alert('Vote failed');
+    
+                // Revert isClicked state
+                if (type === 'upvote') {
+                    if (voteChange === 1) setIsClicked(null);
+                    else if (voteChange === 2) setIsClicked('downvote');
+                    else if (voteChange === -1) setIsClicked('upvote');
+                } else {
+                    if (voteChange === -1) setIsClicked(null);
+                    else if (voteChange === -2) setIsClicked('upvote');
+                    else if (voteChange === 1) setIsClicked('downvote');
+                }
+            })
     }
+    
 
 
     return (
@@ -77,8 +97,8 @@ function SingleArticle(){
                 <img src={article.article_img_url} className="article-img-large" placeholder="Article image"/>
                 <p className="text-align-left">Author: {article.author}</p>
                 <p className="text-align-left">Votes: {votes}</p>
-                <button onClick={upvote}>Upvote</button>
-                <button onClick={downvote}>Downvote</button>
+                <button onClick={()=> handleVote('upvote')} className={isClicked === "upvote" ? "vote-button-selected" : "vote-button"}>Upvote</button>
+                <button onClick={()=> handleVote('downvote')} className={isClicked === "downvote" ? "vote-button-selected" : "vote-button"}>Downvote</button>
                 <p className="single-article-body">{article.body}</p>
             </div>
         </div>
