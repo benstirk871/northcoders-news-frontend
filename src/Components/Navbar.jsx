@@ -13,7 +13,7 @@ function Navbar(){
             <Link to="/articles" className="nav-bar-item">Articles</Link>
         </span>
         <span className="navbar-right">
-            <Link to="/users/:username">
+            <Link to="/users">
             {!isLoggedIn ? <span>Sign In</span> : <span>{loggedInUser.username}</span> }
             </Link>
         </span>

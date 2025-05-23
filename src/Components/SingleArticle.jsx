@@ -12,7 +12,7 @@ function SingleArticle(){
 
     const [article, setArticle] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
+    const [error, setError] = useState(null)
     const [isClicked, setIsClicked] = useState(null)
     let [votes, setVotes] = useState(0)
     const {article_id} = useParams()
@@ -25,15 +25,17 @@ function SingleArticle(){
             setIsLoading(false)
             setVotes(response.votes)
         })
-        .catch(() => {
+        .catch((error) => {
             setIsLoading(false)
-            setIsError(true)
+            setError(error)
+            console.log(error);
+            
         })
     }, [])
 
        
     if(isLoading) return <Loading />
-    if(isError) return <Error />
+    if(error) return <Error errorCode={error.status} />
 
     function handleVote(type){
         if (!isLoggedIn){

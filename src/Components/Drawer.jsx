@@ -20,7 +20,7 @@ function Drawer({ children }){
 
     return (
         <>
-        <button onClick={openCommentForm}>Add comment</button>
+        <button onClick={openCommentForm} className="add-comment-button">Add comment</button>
         {drawerOpen ? children : null}
         </>
     )

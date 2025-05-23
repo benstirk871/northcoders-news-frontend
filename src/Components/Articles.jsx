@@ -12,7 +12,7 @@ function Articles(){
 
     const [articles, setArticles] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
+    const [error, setError] = useState(null)
     const {topic} = useParams()
     const [sortBy, setSortBy] = useState(null)
     const [orderBy, setOrderBy] = useState(null)
@@ -24,14 +24,15 @@ function Articles(){
             setArticles(response)
             setIsLoading(false)
         })
-        .catch(() => {
+        .catch((error) => {
             setIsLoading(false)
-            setIsError(true)
+            setError(error)
+            console.log(error);
         })
     }, [topic, sortBy, orderBy])
 
     if(isLoading) return <Loading />
-    if(isError) return <Error />
+    if(error) return <Error errorCode={error.status}/>
     
 
     return (
