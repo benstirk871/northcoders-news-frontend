@@ -13,6 +13,7 @@ function CommentsSection({ article_id}) {
   const [refreshComments, setRefreshComments] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false)
+  
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,9 +58,9 @@ function CommentsSection({ article_id}) {
       ) : (
         comments.map((comment) => (
           <div key={comment.comment_id} className="comment-card">
-            <p>Posted by: {comment.author}</p>
             <p>{comment.body}</p>
-            <p>Votes: {comment.votes}</p>
+            <p>Posted by: {comment.author}</p>
+            {/* <p>Votes: {comment.votes}</p> */}
             {loggedInUser.username === comment.author ? (<button onClick={()=>deleteComment(comment.comment_id)}>Delete</button>) : null}
           </div>
         ))
