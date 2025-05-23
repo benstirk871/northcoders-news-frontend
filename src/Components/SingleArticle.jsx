@@ -71,10 +71,9 @@ function SingleArticle(){
     
         patchArticleById(article_id, voteChange)
             .catch(()=>{
-                setVotes(prevVotes => prevVotes - voteChange); // revert
+                setVotes(prevVotes => prevVotes - voteChange);
                 alert('Vote failed');
     
-                // Revert isClicked state
                 if (type === 'upvote') {
                     if (voteChange === 1) setIsClicked(null);
                     else if (voteChange === 2) setIsClicked('downvote');
