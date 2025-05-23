@@ -27,20 +27,16 @@ function Articles(){
         .catch((error) => {
             setIsLoading(false)
             setError(error)
-            console.log(error);
         })
     }, [topic, sortBy, orderBy])
 
     if(isLoading) return <Loading />
     if(error) return <Error errorCode={error.status}/>
     
-
     return (
         <>
-        <div className="articles-header">
         <TopicsNavbar/>
         <SortByDropdown sortBy={sortBy} setSortBy={setSortBy} orderBy={orderBy} setOrderBy={setOrderBy}/>
-        </div>
         <div className="articles-container">
             {articles.map((article) => {
                 return (

@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -9,7 +9,6 @@
 .navbar-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 10px 20px;
   border-bottom: 1px solid #ccc;
 }
@@ -26,15 +25,18 @@
   margin-right: 20px;
 }
 
+.large {
+  font-size: 1.5rem;
+}
+
+.topic-link{
+  font-size: 1.2rem;
+} 
+
+  
+
 
 /* Articles styling */
-.articles-header {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start; 
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
-}
 
 .articles-container {
   max-width: 500px;
@@ -48,6 +50,10 @@
   justify-content: space-between;
   align-items: center;
   text-align: left;
+}
+
+.articles-card:last-of-type {
+  border-bottom: none;
 }
 
 .article-img-small {
@@ -68,7 +74,7 @@
 .article-img-large {
   max-width: 500px;
   max-height: 500px;
-  outline: 1px solid white;
+  outline: 1px solid #ccc;
 }
 
 .single-article-body {
@@ -96,6 +102,10 @@
   padding: 15px;
 }
 
+.comment-card:last-of-type {
+  border-bottom: none;
+}
+
 .comment-input {
   min-height: 32px;
   width: 100%;
@@ -117,7 +127,10 @@
 .sortby-dropdown-container {
   margin-top: 10px;
   margin-bottom: 10px;
-  text-align: right;
+  margin-left: 13px;
+  text-align: left;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
 #sortField {
@@ -136,13 +149,49 @@
   color: black;
 }
 
-.topic-link {
-  padding: 10px;
-  text-align: left;
-}
 
 .topics-navbar-container {
   max-width: 500px;
   padding: 7px;
-  margin-top: 13px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+/* Users styling */
+.users-container {
+  min-width: 400px;
+}
+
+.user-card{
+  max-width: 300px;
+  margin: 0 auto;
+  border-bottom: 1px solid #ccc;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-card:last-of-type {
+  border-bottom: none;
+}
+
+.profile-picture-container {
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.profile-picture {
+  max-width: 128px;
+  max-height: 128px;
 }

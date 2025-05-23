@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import {Routes, Route} from 'react-router'
+import { UserContext } from './Context/User'
 import './App.css'
 import Home from './Components/Home'
 import Navbar from './Components/Navbar'
 import Articles from './Components/Articles'
 import SingleArticle from './Components/SingleArticle'
-import ProfilePage from './Components/ProfilePage'
-import { UserContext } from './Context/User'
-import Error from './Components/Error'
+import Users from './Components/Users'
 import ErrorPage from './Components/ErrorPage'
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/articles/:topic?" element={<Articles/>} />
             <Route path="/article/:article_id" element={<SingleArticle/>} />
-            <Route path="/users" element={<ProfilePage/>} />
+            <Route path="/users" element={<Users/>} />
             <Route path="*" element={<ErrorPage/>}/>
         </Routes>
     </>

@@ -31,10 +31,10 @@ export const getCommentsByArticleId = (article_id) => {
     })
 }
 
-export const getUserByUsername = (username) => {
-    return northcodersNewsApi.get(`/users/${username}`)
+export const getUsers = () => {
+    return northcodersNewsApi.get(`/users`)
     .then((response) => {
-        return response.data.user
+        return response.data.users
     })
 }
 
