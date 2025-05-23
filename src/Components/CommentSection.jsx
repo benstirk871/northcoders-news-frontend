@@ -50,7 +50,7 @@ function CommentsSection({ article_id}) {
           setRefreshComments={setRefreshComments}
         />
       </Drawer>
-      <h3>Comments</h3>
+      <h3 className="comments-header">Comments</h3>
       {isCommentError ? (
         <p>Could not display comments</p>
       ) : isLoading ? (

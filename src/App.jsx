@@ -7,6 +7,8 @@ import Articles from './Components/Articles'
 import SingleArticle from './Components/SingleArticle'
 import ProfilePage from './Components/ProfilePage'
 import { UserContext } from './Context/User'
+import Error from './Components/Error'
+import ErrorPage from './Components/ErrorPage'
 
 function App() {
 
@@ -21,7 +23,8 @@ function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/articles/:topic?" element={<Articles/>} />
             <Route path="/article/:article_id" element={<SingleArticle/>} />
-            <Route path="/users/:username" element={<ProfilePage/>} />
+            <Route path="/users" element={<ProfilePage/>} />
+            <Route path="*" element={<ErrorPage/>}/>
         </Routes>
     </>
     </UserContext.Provider>
