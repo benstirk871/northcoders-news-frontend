@@ -5,9 +5,10 @@ import Loading from "./Loading";
 
 function Users(){
 
-    const {loggedInUser, setLoggedInUser, isLoggedIn} = useContext(UserContext)
+    const {loggedInUser, setLoggedInUser} = useContext(UserContext)
 
     const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
     const [users, setUsers] = useState([])
 
       
@@ -20,7 +21,8 @@ function Users(){
             setUsers(response)    
         })
         .catch(() => {
-            alert('Failed to log in')
+            setIsLoading(false)
+            setIsError(true)
         })
     }, [])
     
@@ -33,6 +35,9 @@ function Users(){
     }
 
     if (isLoading) return <Loading />
+    if (isError){
+        return (<h2>Could not load users</h2>)
+    } 
     
     return (
         <div className="users-container">
